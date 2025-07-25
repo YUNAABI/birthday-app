@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Letters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>💌 Daily Love Letters Countdown 💌</h1>
+        <p>Click on a letter to view the message for that day!</p>
+
+        <div class="card">
+            {% if letters %}
+                {% for letter in letters %}
+                    <a href="{{ url_for('letter', letter=letter) }}" class="button">{{ letter }}</a>
+                {% endfor %}
+            {% else %}
+                <p>No letters to show yet. Come back on the right day! 🕰️</p>
+            {% endif %}
+        </div>
+
+        <br>
+        <a href="{{ url_for('index') }}" class="button">Back to Home</a>
+    </div>
+</body>
+</html>

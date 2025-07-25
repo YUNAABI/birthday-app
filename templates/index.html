@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Countdown</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Birthday Countdown Surprise 🎉</h1>
+    <p>Get ready for 19 days of love and letters. Unlock one surprise each day!</p>
+    <a href="{{ url_for('message_list') }}" class="button">See My Messages</a>
+    <a href="{{ url_for('day20') }}" class="button">Final Day </a>
+  </div>
+</body>
+</html>
