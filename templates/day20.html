@@ -7,8 +7,9 @@
 <body>
   <div class="container">
     <h1>HEY</h1>
+    <div class="content-box"> 
     {% if error %}
-      <p style="color: red;">{{ error }}</p>
+       </p>style="color: red;">{{ error }}</p>
     {% endif %}
     <form method="POST">
       <input type="password" name="password" placeholder="Enter secret password" required>
@@ -20,6 +21,7 @@
       </div>
     {% endif %}
     <a href="{{ url_for('index') }}" class="button">Back Home</a>
+  </div>
   </div>
 </body>
 </html>
