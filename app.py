@@ -68,7 +68,7 @@ def show_letter(letter):
 @app.route('/day20', methods=['GET', 'POST'])
 def day20():
     today = date.today()
-    if today < date(2025, 7, 20):
+    if today < date(2025, 8, 20):
         return "Nothing here kutta", 403
 
     if request.method == 'POST':
