@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request ,redirect, url_for
 from datetime import date
 
+
 app = Flask(__name__)
 
 # 👇 Add this line to fix the error
@@ -35,36 +36,40 @@ messages = [
 @app.route('/')
 def index():
     return render_template('index.html')
+from datetime import date, datetime, timedelta
+import pytz
+
+tz = pytz.timezone('Asia/Kolkata')
 @app.route('/messages')
 def message_list():
-    from datetime import date, timedelta
+    today = datetime.now(tz).date()  # use India date
+    start_date = date(2025, 8, 1)
 
-    start_date =  date(2025, 8, 1)  # August 1
-    today = date.today()
+    unlocked_messages = []
+    for msg in messages:
+        # Convert msg["date"] to date object
+        msg_date = datetime.strptime(msg["date"] + " 2025", "%B %d %Y").date()
+        if today >= msg_date:
+            unlocked_messages.append(msg)
 
-    messages = []
-    letters = list("ABCDEFGHIJKLMNOPQRS")  # 19 letters for Aug 1 to Aug 19
-
-    for i, letter in enumerate(letters):
-        message_date = start_date + timedelta(days=i)
-        if today >= message_date:
-            messages.append({
-                'date': message_date.strftime("%B %d, %Y"),
-                'letter': letter,
-                'text': f"This is your special message for letter {letter} ❤️"
-            })
-
-    return render_template('message.html', messages=messages)
+    return render_template('message.html', messages=unlocked_messages)
 
 @app.route('/letter/<letter>')
 def show_letter(letter):
-    today = date.today()
-    index = ord(letter.upper()) - 65
-    unlock_date = start_date.replace(day=start_date.day + index)
-    if today >= unlock_date and letter.upper() in messages:
-        return render_template('letter.html', letter=letter.upper(), message=messages[letter.upper()])
-    return "Not Available Yet", 403
+    today = datetime.now(tz).date()
+    start_date = date(2025, 8, 1)
 
+    index = ord(letter.upper()) - 65  # A=0, B=1 ...
+    unlock_date = start_date + timedelta(days=index)
+
+    if today >= unlock_date:
+        for msg in messages:
+            if msg["letter"].upper() == letter.upper():
+                return render_template('letter.html', letter=letter.upper(), message=msg["text"])
+        return "Message not found", 404
+    else:
+        return "Not Available Yet", 403
+    
 @app.route('/day20', methods=['GET', 'POST'])
 def day20():
     today = date.today()
