@@ -13,9 +13,11 @@
         <p>Click on a letter to view the message for that day!</p>
 
         <div class="card">
-            {% if letters %}
-                {% for letter in letters %}
-                    <a href="{{ url_for('letter', letter=letter) }}" class="button">{{ letter }}</a>
+            {% if messages %}
+                {% for msg in messages %}
+                    <a href="{{ url_for('show_letter', letter=msg['letter']) }}" class="button">
+                        {{ msg['letter'] }} - {{ msg['date'] }}
+                    </a>
                 {% endfor %}
             {% else %}
                 <p>No letters to show yet. Come back on the right day! 🕰️</p>

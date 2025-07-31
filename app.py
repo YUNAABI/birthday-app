@@ -40,19 +40,24 @@ from datetime import date, datetime, timedelta
 import pytz
 
 tz = pytz.timezone('Asia/Kolkata')
+
 @app.route('/messages')
 def message_list():
     today = datetime.now(tz).date()  # use India date
     start_date = date(2025, 8, 1)
 
+    # ✅ Debugging: Check what date your code thinks it is
+    print("TODAY:", today)
+
     unlocked_messages = []
     for msg in messages:
-        # Convert msg["date"] to date object
         msg_date = datetime.strptime(msg["date"] + " 2025", "%B %d %Y").date()
+        print(msg["date"], msg_date, today >= msg_date)  # ✅ Debugging line
         if today >= msg_date:
             unlocked_messages.append(msg)
 
     return render_template('message.html', messages=unlocked_messages)
+
 
 @app.route('/letter/<letter>')
 def show_letter(letter):
