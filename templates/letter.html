@@ -2,20 +2,37 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Letter {{ letter }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .letter-message {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff0f6;
+      border-radius: 10px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      font-size: 1.1em;
+      text-align: left;
+    }
+    @media (max-width: 768px) {
+      .letter-message {
+        font-size: 1em;
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Letter {{ letter }}</h1>
-    <p>{{ message }}</p>
+    <div class="letter-message">
+      {{ message }}
+    </div>
     <a href="{{ url_for('message_list') }}" class="button">Back to Messages</a>
   </div>
-
-<div class="letter-message">
-    {{ message }}
-</div>
 
 {% if letter == "S" %}
 <style>
@@ -70,7 +87,7 @@
 </style>
 
 <script>
-// ❤️ Create floating hearts
+// ❤️ Floating hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.innerHTML = "❤️";
@@ -81,7 +98,7 @@ function createHeart() {
     setTimeout(() => heart.remove(), 3000);
 }
 
-// 🎉 Create falling confetti
+// 🎉 Falling confetti
 function createConfetti() {
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
@@ -92,7 +109,7 @@ function createConfetti() {
     setTimeout(() => confetti.remove(), 4000);
 }
 
-// 🎈 Create balloons
+// 🎈 Balloons
 function createBalloon() {
     const balloon = document.createElement("div");
     balloon.classList.add("balloon");
@@ -103,7 +120,7 @@ function createBalloon() {
     setTimeout(() => balloon.remove(), 6000);
 }
 
-// ✨ Create sparkles
+// ✨ Sparkles
 function createSparkle() {
     const sparkle = document.createElement("div");
     sparkle.classList.add("sparkle");
@@ -115,13 +132,11 @@ function createSparkle() {
 }
 
 // Run animations
-setInterval(createHeart, 400);     // hearts
-setInterval(createConfetti, 200); // confetti
-setInterval(createBalloon, 1500); // balloons
-setInterval(createSparkle, 500);  // sparkles
+setInterval(createHeart, 400);
+setInterval(createConfetti, 200);
+setInterval(createBalloon, 1500);
+setInterval(createSparkle, 500);
 </script>
 {% endif %}
-
-
 </body>
 </html>
