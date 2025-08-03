@@ -12,5 +12,116 @@
     <p>{{ message }}</p>
     <a href="{{ url_for('message_list') }}" class="button">Back to Messages</a>
   </div>
+
+<div class="letter-message">
+    {{ message }}
+</div>
+
+{% if letter == "S" %}
+<style>
+/* ❤️ Heart animation */
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
+}
+.heart {
+    position: fixed;
+    color: red;
+    font-size: 24px;
+    pointer-events: none;
+    animation: floatUp 3s ease-in-out forwards;
+}
+
+/* 🎉 Confetti animation */
+@keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 14px;
+    background-color: hsl(var(--hue), 100%, 50%);
+    animation: confettiFall 4s linear forwards;
+}
+
+/* 🎈 Balloon animation */
+@keyframes balloonFloat {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-150px); opacity: 0; }
+}
+.balloon {
+    position: fixed;
+    font-size: 28px;
+    animation: balloonFloat 6s ease-in-out forwards;
+}
+
+/* ✨ Sparkle animation */
+@keyframes sparkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+}
+.sparkle {
+    position: fixed;
+    color: gold;
+    font-size: 14px;
+    animation: sparkle 1.5s infinite;
+}
+</style>
+
+<script>
+// ❤️ Create floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.bottom = "0px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+}
+
+// 🎉 Create falling confetti
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.setProperty("--hue", Math.floor(Math.random() * 360));
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.top = "-10px";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 4000);
+}
+
+// 🎈 Create balloons
+function createBalloon() {
+    const balloon = document.createElement("div");
+    balloon.classList.add("balloon");
+    const colors = ["🎈", "🎉", "💖", "💜"];
+    balloon.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+    balloon.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 6000);
+}
+
+// ✨ Create sparkles
+function createSparkle() {
+    const sparkle = document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.innerHTML = "✦";
+    sparkle.style.left = Math.random() * window.innerWidth + "px";
+    sparkle.style.top = Math.random() * window.innerHeight + "px";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1500);
+}
+
+// Run animations
+setInterval(createHeart, 400);     // hearts
+setInterval(createConfetti, 200); // confetti
+setInterval(createBalloon, 1500); // balloons
+setInterval(createSparkle, 500);  // sparkles
+</script>
+{% endif %}
+
+
 </body>
 </html>
